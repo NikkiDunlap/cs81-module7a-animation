@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loading Animation Simulator</title>
+</head>
+<body style="font-family: monospace; text-align: center; padding-top: 100px; background-color: #f4f4f4;">
+
+  <!-- This div shows the loading animation emojis -->
+  <div id="loader" style="font-size: 2rem; margin-bottom: 20px;">Loading...</div>
+
+  <!-- This div shows the status message -->
+  <div id="status">Please wait</div>
+
+  <script>
+    // This function controls the animated loading behavior
+    function runLoadingAnimation() 
+    {
+      // Grab the loader and status elements from the DOM by ID
+      const loader = document.getElementById("loader");
+      const status = document.getElementById("status");
+
+      // Frames are the visual symbols shown during the loading animation
+      const frames = ["⏳", "⌛", ".", "..", "..."];
+
+      // Index tracks the current frame to display
+      let index = 0;
+
+      // cycleCount tracks how many full loops through the frames array
+      let cycleCount = 0;
+
+      // maxCycles is how many times we want the animation to loop
+      const maxCycles = 10;
+
+      // setInterval repeatedly calls the function inside every 500ms (half second)
+      const interval = setInterval(() => {
+        // Update loader with the current frame (loops with modulo operator)
+        loader.textContent = frames[index % frames.length];
+        index++;
+
+        // After each full cycle through all frames, increment cycleCount
+        if (index % frames.length === 0) 
+        {
+          cycleCount++;
+        }
+
+        // Once we've completed the desired number of cycles, stop the animation
+        if (cycleCount >= maxCycles) 
+        {
+          clearInterval(interval); // Stops the setInterval loop
+          loader.textContent = "✅"; // Show a finished checkmark
+          status.textContent = "Done!"; // Update the message
+          document.body.style.backgroundColor = "#c8f7c5"; // New feature: background turns green
+        }
+      }, 500); // Animation frame updates every 500 milliseconds
+    }
+
+    // Start the loading animation when the page loads
+    runLoadingAnimation();
+
+    // Creative Idea: Play a soft chime sound when the animation finishes using the Web Audio API
+  </script>
+
+</body>
+</html>
 
